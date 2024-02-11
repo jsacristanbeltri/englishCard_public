@@ -1,0 +1,651 @@
+openapi: 3.0.1
+x-stoplight:
+  id: n78xu0m7ophsb
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: 'http://localhost:8080'
+    description: Generated server url
+paths:
+  '/api/v1/users/{id}':
+    get:
+      tags:
+        - user-controller
+      operationId: findById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: userLoged
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    put:
+      tags:
+        - user-controller
+      operationId: updateUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userLoged:
+                  $ref: '#/components/schemas/User'
+                userRequest:
+                  $ref: '#/components/schemas/UserInUpdateDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+        - user-controller
+      operationId: deleteUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  '/api/v1/decks/{id}':
+    get:
+      tags:
+        - deck-controller
+      operationId: findById_1
+      parameters:
+        - name: userLoged
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    put:
+      tags:
+        - deck-controller
+      operationId: update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userLoged:
+                  $ref: '#/components/schemas/User'
+                deckRequest:
+                  $ref: '#/components/schemas/DeckInDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+        - deck-controller
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  '/api/v1/cards/{id}':
+    get:
+      tags:
+        - card-controller
+      operationId: findCardByid
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: user
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    put:
+      tags:
+        - card-controller
+      operationId: updateCard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userLoged:
+                  $ref: '#/components/schemas/User'
+                cardRequest:
+                  $ref: '#/components/schemas/CreateCardDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+        - card-controller
+      operationId: deleteCard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/users/register:
+    post:
+      tags:
+        - user-controller
+      operationId: addUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GetUserDto'
+  /api/v1/decks:
+    get:
+      tags:
+        - deck-controller
+      operationId: findAll
+      parameters:
+        - name: userLoged
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    post:
+      tags:
+        - deck-controller
+      operationId: addDeck
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deckRequest:
+                  $ref: '#/components/schemas/DeckInDto'
+                userLoged:
+                  $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  '/api/v1/cards/deck/{idDeck}':
+    get:
+      tags:
+        - card-controller
+      operationId: getCardsByIdDeck
+      parameters:
+        - name: idDeck
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: user
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    post:
+      tags:
+        - card-controller
+      operationId: addCard
+      parameters:
+        - name: idDeck
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cardRequest:
+                  $ref: '#/components/schemas/CreateCardDto'
+                user:
+                  $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/auth/login:
+    post:
+      tags:
+        - auth-controller
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/JwtUserResponse'
+  /api/v1/users:
+    get:
+      tags:
+        - user-controller
+      operationId: findAllUsers
+      parameters:
+        - name: userLoged
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  '/api/v1/users/username/{usernameRequest}':
+    get:
+      tags:
+        - user-controller
+      operationId: findByUsername
+      parameters:
+        - name: usernameRequest
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userLoged
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  '/api/v1/users/email/{emailRequest}':
+    get:
+      tags:
+        - user-controller
+      operationId: findByEmail
+      parameters:
+        - name: emailRequest
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userLoged
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  '/api/v1/decks/language/{languageRequest}':
+    get:
+      tags:
+        - deck-controller
+      operationId: getAllDecksByUsernameLenguage
+      parameters:
+        - name: userLoged
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+        - name: languageRequest
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  '/api/v1/cards/responseCardYes/{id}':
+    get:
+      tags:
+        - card-controller
+      operationId: saveCardResponseYes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  '/api/v1/cards/responseCardNo/{id}':
+    get:
+      tags:
+        - card-controller
+      operationId: saveCardResponseNo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  '/api/v1/cards/pending/deck/{idDeck}':
+    get:
+      tags:
+        - card-controller
+      operationId: getCardsByIdDeckToStudy
+      parameters:
+        - name: idDeck
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: user
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/auth/user/me:
+    get:
+      tags:
+        - auth-controller
+      operationId: me
+      parameters:
+        - name: user
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GetUserDto'
+components:
+  schemas:
+    GrantedAuthority:
+      type: object
+      properties:
+        authority:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        avatar:
+          type: string
+        roles:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+              - USER
+              - ADMIN
+        enabled:
+          type: boolean
+        credentialsNonExpired:
+          type: boolean
+        accountNonExpired:
+          type: boolean
+        authorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/GrantedAuthority'
+        accountNonLocked:
+          type: boolean
+    UserInUpdateDto:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        avatar:
+          type: string
+    DeckInDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        language:
+          type: string
+    CreateCardDto:
+      type: object
+      properties:
+        name1:
+          type: string
+        name2:
+          type: string
+        enable:
+          type: boolean
+    CreateUserDTO:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        avatar:
+          type: string
+    GetUserDto:
+      type: object
+      properties:
+        username:
+          type: string
+        avatar:
+          type: string
+        roles:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    LoginRequest:
+      required:
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    JwtUserResponse:
+      type: object
+      properties:
+        username:
+          type: string
+        avatar:
+          type: string
+        roles:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        token:
+          type: string
